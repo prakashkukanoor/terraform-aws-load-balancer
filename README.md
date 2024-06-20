@@ -1,2 +1,2 @@
-# terraform-aws-load-balancer
-Terraform module to create load balancer
+# terraform-aws-module
+Terraform module
