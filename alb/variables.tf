@@ -13,15 +13,26 @@ variable "team" {
   default = "devops"
 }
 
+variable "cluster_name" {
+  type = string
+}
+
+variable "vpc_id" {
+  type = string
+  default = "instance"
+}
+
+variable "target_type" {
+  type = string
+}
+
+
 variable "applications" {
   type = map(object({
-    name            = string
     type            = string
     internal        = bool
     subnets         = list(string)
     security_groups = list(string)
-    nodeport        = number
-    listener_port   = number
   }))
   default = {
   }
