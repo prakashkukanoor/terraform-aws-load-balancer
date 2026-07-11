@@ -18,7 +18,7 @@ resource "aws_lb" "this" {
 }
 
 resource "aws_lb_target_group" "this" {
-  name        = "${var.cluster_name}-target-group"
+  name        = "${var.cluster_name}-tg"
   port        = var.ingress_node_port
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
