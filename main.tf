@@ -69,6 +69,6 @@ resource "aws_lb_listener" "http" {
 # }
 
 resource "aws_autoscaling_attachment" "asg_lb_link" {
-  autoscaling_group_name = var.eks_worker_asg_id
+  autoscaling_group_name = var.eks_worker_asg_name
   lb_target_group_arn    = aws_lb_target_group.this.arn
 }

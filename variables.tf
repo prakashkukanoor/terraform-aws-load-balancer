@@ -21,7 +21,7 @@ variable "subnets" {
   type = list(string)
 }
 
-variable "eks_worker_asg_id" {
+variable "eks_worker_asg_name" {
   type = string
 }
 
