@@ -50,3 +50,7 @@ variable "vpc_id" {
 variable "target_type" {
   type = string
 }
+
+variable "eks_cluster_security_group_id" {
+  type = string
+}
