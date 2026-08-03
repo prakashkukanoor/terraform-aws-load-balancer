@@ -33,7 +33,7 @@ resource "aws_lb_target_group" "this" {
     enabled             = true
     path                = "/healthz" # The health endpoint of your app
     protocol            = "HTTP"
-    port                = var.ingress_node_port
+    port                = "traffic-port" 
     interval            = 30
     timeout             = 5
     healthy_threshold   = 2
@@ -47,14 +47,14 @@ resource "aws_lb_listener" "http" {
   protocol          = "HTTP"
 
   default_action {
-    type = "redirect"
-
-    redirect {
-      port        = "443"
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
-    }
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.this.arn
   }
+}
+
+resource "aws_autoscaling_attachment" "asg_lb_link" {
+  autoscaling_group_name = var.eks_worker_asg_name
+  lb_target_group_arn    = aws_lb_target_group.this.arn
 }
 
 # resource "aws_lb_listener" "https" {
@@ -69,8 +69,3 @@ resource "aws_lb_listener" "http" {
 #     target_group_arn = aws_lb_target_group.this.arn
 #   }
 # }
-
-resource "aws_autoscaling_attachment" "asg_lb_link" {
-  autoscaling_group_name = var.eks_worker_asg_name
-  lb_target_group_arn    = aws_lb_target_group.this.arn
-}
