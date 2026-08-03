@@ -1,5 +1,5 @@
 resource "aws_security_group" "this" {
-  name        = "${aws_lb.this.name}-sg"
+  name        = "${local.load_balancer_name}-sg"
   description = "Allow public web traffic to the LB"
   vpc_id      = var.vpc_id
 
