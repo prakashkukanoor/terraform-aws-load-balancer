@@ -1,4 +1,5 @@
 locals {
+  load_balancer_name = "${var.cluster_name}-lb"
   common_tags = {
     environment = var.environment
     managedBy   = var.team
@@ -7,10 +8,11 @@ locals {
 }
 
 resource "aws_lb" "this" {
-  name               = "${var.cluster_name}-lb"
+  name               = local.load_balancer_name
   internal           = var.is_lb_internal
   load_balancer_type = var.load_balancer_type
   subnets            = var.subnets
+  security_groups    = [aws_security_group.this.id]
 
   tags = merge(
     local.common_tags,

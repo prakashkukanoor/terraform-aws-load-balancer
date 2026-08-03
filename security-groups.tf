@@ -30,8 +30,8 @@ resource "aws_security_group" "this" {
 
 resource "aws_security_group_rule" "allow_alb_http_traffic_to_eks" {
   type                     = "ingress"
-  from_port                = 80
-  to_port                  = 80
+  from_port                = 30000
+  to_port                  = 32767
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.this.id
   security_group_id        = var.eks_cluster_security_group_id
