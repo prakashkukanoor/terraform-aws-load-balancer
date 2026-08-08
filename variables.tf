@@ -34,7 +34,7 @@ variable "load_balancing_algorithm_type" {
   default = "least_outstanding_requests"
 }
 
-variable "ingress_node_port" {
+variable "envoy_healthcheck_port" {
   type = number
 }
 

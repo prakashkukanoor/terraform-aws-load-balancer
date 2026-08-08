@@ -21,7 +21,7 @@ resource "aws_lb" "this" {
 
 resource "aws_lb_target_group" "this" {
   name        = "${var.cluster_name}-tg"
-  port        = var.ingress_node_port
+  port        = var.envoy_healthcheck_port
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = var.target_type
@@ -31,7 +31,7 @@ resource "aws_lb_target_group" "this" {
 
   health_check {
     enabled             = true
-    path                = "/healthz" # The health endpoint of your app
+    path                = "/ready" # The health endpoint of your app
     protocol            = "HTTP"
     port                = "traffic-port" 
     interval            = 30
