@@ -38,6 +38,10 @@ variable "envoy_healthcheck_port" {
   type = number
 }
 
+variable "ingress_node_port" {
+  type = number
+}
+
 variable "is_lb_internal" {
   type = bool
 }
