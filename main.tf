@@ -33,7 +33,7 @@ resource "aws_lb_target_group" "this" {
     enabled             = true
     path                = "/ready" # The health endpoint of your app
     protocol            = "HTTP"
-    port                = var.ingress_node_port
+    port                = var.envoy_healthcheck_port
     interval            = 30
     timeout             = 5
     healthy_threshold   = 2
