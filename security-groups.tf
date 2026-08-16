@@ -28,28 +28,19 @@ resource "aws_security_group" "this" {
   }
 }
 
-resource "aws_security_group_rule" "allow_alb_http_traffic_to_eks" {
+resource "aws_security_group_rule" "allow_alb_app_traffic_to_eks" {
   type                     = "ingress"
-  from_port                = 30000
-  to_port                  = 32767
+  from_port                = var.lb_targetGroup_port
+  to_port                  = var.lb_targetGroup_port
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.this.id
   security_group_id        = var.eks_cluster_security_group_id
 }
 
-resource "aws_security_group_rule" "allow_alb_ephemeral_traffic" {
+resource "aws_security_group_rule" "allow_alb_healthcheck_traffic_to_eks" {
   type                     = "ingress"
-  from_port                = 1024
-  to_port                  = 65535
-  protocol                 = "tcp"
-  source_security_group_id = aws_security_group.this.id
-  security_group_id        = var.eks_cluster_security_group_id
-}
-
-resource "aws_security_group_rule" "allow_alb_healthcheck_traffic" {
-  type                     = "ingress"
-  from_port                = 80
-  to_port                  = 80
+  from_port                = var.lb_healthCheck_port
+  to_port                  = var.lb_healthCheck_port
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.this.id
   security_group_id        = var.eks_cluster_security_group_id
