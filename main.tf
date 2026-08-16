@@ -22,20 +22,20 @@ resource "aws_lb" "this" {
 resource "aws_lb_target_group" "this" {
   name        = "${var.cluster_name}-tg"
   port        = var.lb_targetGroup_port
-  protocol    = "HTTP"
+  protocol    = var.lb_tg_protocol[var.load_balancer_type]
   vpc_id      = var.vpc_id
   target_type = var.target_type
 
   # Intelligent Routing Algorithm
-  load_balancing_algorithm_type = var.load_balancing_algorithm_type
+  load_balancing_algorithm_type = var.load_balancer_type == "application" ? var.load_balancing_algorithm_type: null
 
   health_check {
     enabled             = true
     path                = "/ready" # The health endpoint of your app
     protocol            = "HTTP"
     port                = var.lb_healthCheck_port
-    interval            = 30
-    timeout             = 5
+    interval            = 10
+    # timeout             = 5
     healthy_threshold   = 2
     unhealthy_threshold = 2
   }
@@ -44,7 +44,7 @@ resource "aws_lb_target_group" "this" {
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.this.arn
   port              = "80"
-  protocol          = "HTTP"
+  protocol          = var.lb_tg_protocol[var.load_balancer_type]
 
   default_action {
     type             = "forward"
