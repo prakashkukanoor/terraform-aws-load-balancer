@@ -16,7 +16,7 @@ resource "aws_lb" "this" {
 
   tags = merge(
     local.common_tags,
-  { Name = load_balancer_name })
+  { Name = local.load_balancer_name })
 }
 
 resource "aws_lb_target_group" "this" {
@@ -42,7 +42,7 @@ resource "aws_lb_target_group" "this" {
 
   tags = merge(
     local.common_tags,
-  { Name = load_balancer_name })
+  { Name = local.load_balancer_name })
 }
 
 resource "aws_lb_listener" "http" {
