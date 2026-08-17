@@ -40,6 +40,17 @@ variable "lb_tg_protocol" {
   }
 }
 
+variable "lb_name_suffix" {
+  type = object({
+    application = string
+    network     = string
+  })
+  default = {
+    application = "alb"
+    network = "nlb"
+  }
+}
+
 variable "load_balancing_algorithm_type" {
   type    = string
   default = "least_outstanding_requests"

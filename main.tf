@@ -1,5 +1,5 @@
 locals {
-  load_balancer_name = "${var.cluster_name}-lb"
+  load_balancer_name = "${var.cluster_name}-${var.lb_name_suffix[var.load_balancer_type]}"
   common_tags = {
     environment = var.environment
     managedBy   = var.team
