@@ -16,7 +16,7 @@ resource "aws_lb" "this" {
 
   tags = merge(
     local.common_tags,
-  { Name = "${var.cluster_name}-lb" })
+  { Name = load_balancer_name })
 }
 
 resource "aws_lb_target_group" "this" {
@@ -39,6 +39,10 @@ resource "aws_lb_target_group" "this" {
     healthy_threshold   = 2
     unhealthy_threshold = 2
   }
+
+  tags = merge(
+    local.common_tags,
+  { Name = load_balancer_name })
 }
 
 resource "aws_lb_listener" "http" {
